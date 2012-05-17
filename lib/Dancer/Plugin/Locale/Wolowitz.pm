@@ -33,10 +33,7 @@ sub _loc {
 
     !$args and return $w->loc($str, $lang);
 
-    my $msg = $w->loc($str, $lang);
-    foreach my $arg (@{$args}) {
-        $msg .= ' ' . $w->loc($arg, $lang);
-    }
+    my $msg = $w->loc($str, $lang, map($w->loc($_, $lang), @{$args}));
 
     return $msg;
 }
@@ -63,3 +60,5 @@ sub _lang {
 
     return $lang;
 }
+
+1;
