@@ -22,6 +22,20 @@ add_hook(
     }
 );
 
+=method loc
+
+    loc('Welcome');
+or
+    <% l('Welcome') %>
+
+Translated to the requested language, if such a translation exists, otherwise no traslation occurs.
+
+    input: (Str): Key translate
+           (Arrayref): Arguments are injected to the placeholders in the string
+    output: (Str): Translated to the requested language
+
+=cut
+
 register loc => sub {
     _loc(@_);
 };
@@ -62,3 +76,47 @@ sub _lang {
 }
 
 1;
+
+=encoding UTF-8
+
+=head1 SYNOPSIS
+
+    use Dancer ':syntax';
+    use Dancer::Plugin::Locale::Wolowitz;
+
+    get '/' => sub {
+        template index;
+    }
+
+=head1 CONFIGURATION
+
+  plugins:
+    Locale::Wolowitz:
+      lang_session: "lang"
+      locale_path_directory: "i18n"
+
+=head1 CONTRIBUTING
+
+This module is developed on Github at:
+
+L<http://github.com/hobbestigrou/Dancer-Plugin-Locale-Wolowitz>
+
+=head1 ACKNOWLEDGEMENTS
+
+Thanks to Ido Perlmuter
+
+=head1 BUGS
+
+Please report any bugs or feature requests in github.
+
+=head1 SUPPORT
+
+You can find documentation for this module with the perldoc command.
+
+    perldoc Dancer::Plugin::Locale::Wolowitz
+
+=head1 SEE ALSO
+
+L<Dancer>
+
+=cut
