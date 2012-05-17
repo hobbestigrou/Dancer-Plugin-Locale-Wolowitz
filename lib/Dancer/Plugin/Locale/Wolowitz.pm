@@ -3,7 +3,7 @@ package Dancer::Plugin::Locale::Wolowitz;
 use strict;
 use warnings;
 
-use 5.10.2;
+use 5.010;
 
 use Dancer ':syntax';
 use Dancer::Plugin;
