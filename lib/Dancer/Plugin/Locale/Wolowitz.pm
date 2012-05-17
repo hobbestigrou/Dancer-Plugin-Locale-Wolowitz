@@ -75,6 +75,8 @@ sub _lang {
     return $lang;
 }
 
+register_plugin;
+
 1;
 
 =encoding UTF-8
