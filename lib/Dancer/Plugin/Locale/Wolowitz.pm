@@ -12,8 +12,6 @@ use Locale::Wolowitz;
 
 #ABSTRACT: Intenationalization for Dancer
 
-my $w = Locale::Wolowitz->new(_path_directory_locale());
-
 add_hook(
     before_template => sub {
         my $tokens = shift;
@@ -45,6 +43,7 @@ register loc => sub {
 sub _loc {
     my ( $str, $args ) = @_;
 
+    my $w    = Locale::Wolowitz->new(_path_directory_locale());
     my $lang = _lang();
 
     !$args and return $w->loc($str, $lang);
