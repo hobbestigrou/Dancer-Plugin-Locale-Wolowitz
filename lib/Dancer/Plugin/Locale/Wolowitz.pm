@@ -25,8 +25,10 @@ add_hook(
 =method loc
 
     loc('Welcome');
+    loc('View %1', ['Country'])
 or
     <% l('Welcome') %>
+    <% l('View %1', ['Country']) %>
 
 Translated to the requested language, if such a translation exists, otherwise no traslation occurs.
 
@@ -89,6 +91,10 @@ register_plugin;
     get '/' => sub {
         template index;
     }
+
+=head1 DESCRIPTION
+
+Provides an easy way to translate your application. This module relies on L<Locale::Wolowitz>, please consult the documentation of Locale::Wolowitz.
 
 =head1 CONFIGURATION
 
