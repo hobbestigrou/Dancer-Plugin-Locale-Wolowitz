@@ -111,7 +111,7 @@ L<http://github.com/hobbestigrou/Dancer-Plugin-Locale-Wolowitz>
 
 =head1 ACKNOWLEDGEMENTS
 
-Thanks to Ido Perlmuter
+Thanks to Ido Perlmuter to Locale::Wolowitz
 
 =head1 BUGS
 
@@ -126,5 +126,6 @@ You can find documentation for this module with the perldoc command.
 =head1 SEE ALSO
 
 L<Dancer>
+L<Locale::Wolowitz>
 
 =cut
