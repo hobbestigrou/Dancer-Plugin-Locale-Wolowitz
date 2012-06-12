@@ -74,20 +74,23 @@ sub _lang {
         my $session_language = session $lang_session;
 
         if ( !$session_language ){
-            # get from browser, could be factored out into a dedicated sub
-            $lang = request->accept_language;
-            $lang =~ s/-\w+//g;
-            $lang = (split(/,\s*/,$lang))[0] if $lang =~ /,/;
+            $lang = _detect_lang_from_browser();
 
             session $lang_session => $lang;
             return $lang;
-        }else{
+        }
+        else{
             return $session_language;
         }
     }
 
-    # get from browser, could be factored out into a dedicated sub
-    $lang = request->accept_language;
+    $lang = _detect_lang_from_browser();
+    return $lang;
+}
+
+sub _detect_lang_from_browser {
+    my $lang = request->accept_language;
+
     $lang =~ s/-\w+//g;
     $lang = (split(/,\s*/,$lang))[0] if $lang =~ /,/;
 
