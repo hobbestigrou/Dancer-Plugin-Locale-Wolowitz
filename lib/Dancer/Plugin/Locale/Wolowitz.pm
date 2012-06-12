@@ -45,7 +45,7 @@ register loc => sub {
 sub _loc {
     my ( $str, $args ) = @_;
 
-    $w    = Locale::Wolowitz->new(_path_directory_locale()) unless defined($w);
+    $w       = Locale::Wolowitz->new(_path_directory_locale()) unless defined($w);
     my $lang = _lang();
 
     !$args and return $w->loc($str, $lang);
@@ -77,7 +77,7 @@ sub _lang {
             # get from browser, could be factored out into a dedicated sub
             $lang = request->accept_language;
             $lang =~ s/-\w+//g;
-                $lang = (split(/,\s*/,$lang))[0] if $lang =~ /,/;
+            $lang = (split(/,\s*/,$lang))[0] if $lang =~ /,/;
 
             session $lang_session => $lang;
             return $lang;
@@ -89,7 +89,7 @@ sub _lang {
     # get from browser, could be factored out into a dedicated sub
     $lang = request->accept_language;
     $lang =~ s/-\w+//g;
-        $lang = (split(/,\s*/,$lang))[0] if $lang =~ /,/;
+    $lang = (split(/,\s*/,$lang))[0] if $lang =~ /,/;
 
     return $lang;
 }
