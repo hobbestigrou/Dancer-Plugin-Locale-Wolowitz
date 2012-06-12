@@ -70,21 +70,22 @@ sub _lang {
     my $lang;
 
     # don't force the user to store lang in a session
-    if( setting('session') ){
+    if ( setting('session') ) {
         my $session_language = session $lang_session;
 
-        if ( !$session_language ){
+        if ( !$session_language ) {
             $lang = _detect_lang_from_browser();
 
             session $lang_session => $lang;
             return $lang;
         }
-        else{
+        else {
             return $session_language;
         }
     }
 
     $lang = _detect_lang_from_browser();
+
     return $lang;
 }
 
