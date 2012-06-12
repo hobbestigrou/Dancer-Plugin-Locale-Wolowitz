@@ -66,32 +66,32 @@ sub _path_directory_locale {
 
 sub _lang {
     my $settings     = plugin_setting;
-	my $lang_session = $settings->{lang_session} || 'lang';
-	my $lang;
+    my $lang_session = $settings->{lang_session} || 'lang';
+    my $lang;
 
-	# don't force the user to store lang in a session
-	if( setting('session') ){
-		my $session_language = session $lang_session;
+    # don't force the user to store lang in a session
+    if( setting('session') ){
+        my $session_language = session $lang_session;
 
-		if ( !$session_language ){
-			# get from browser, could be factored out into a dedicated sub
-			$lang = request->accept_language;
-			$lang =~ s/-\w+//g;
-		        $lang = (split(/,\s*/,$lang))[0] if $lang =~ /,/;
+        if ( !$session_language ){
+            # get from browser, could be factored out into a dedicated sub
+            $lang = request->accept_language;
+            $lang =~ s/-\w+//g;
+                $lang = (split(/,\s*/,$lang))[0] if $lang =~ /,/;
 
-			session $lang_session => $lang;
-			return $lang;
-		}else{
-			return $session_language;
-		}
-	}
+            session $lang_session => $lang;
+            return $lang;
+        }else{
+            return $session_language;
+        }
+    }
 
-	# get from browser, could be factored out into a dedicated sub
-	$lang = request->accept_language;
-	$lang =~ s/-\w+//g;
+    # get from browser, could be factored out into a dedicated sub
+    $lang = request->accept_language;
+    $lang =~ s/-\w+//g;
         $lang = (split(/,\s*/,$lang))[0] if $lang =~ /,/;
 
-	return $lang;
+    return $lang;
 }
 
 register_plugin;
