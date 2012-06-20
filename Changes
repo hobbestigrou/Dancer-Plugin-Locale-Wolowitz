@@ -2,6 +2,11 @@ Revision history for Dancer-Plugin-Locale-Wolowitz
 
 {{$NEXT}}
 
+0.121720  2012-06-20 23:31:40 Europe/Paris
+
+    Persistent Wolowitz obj so json isn't parsed over and over again.
+    Don't need use a session engine.
+
 0.121391  2012-05-18 23:39:44 Europe/Paris
 
     Fix global variable.
