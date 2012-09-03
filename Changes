@@ -2,6 +2,9 @@ Revision history for Dancer-Plugin-Locale-Wolowitz
 
 {{$NEXT}}
 
+    Add few tests.
+    Add exception if translate directory not found.
+
 0.121720  2012-06-20 23:31:40 Europe/Paris
 
     Persistent Wolowitz obj so json isn't parsed over and over again.
