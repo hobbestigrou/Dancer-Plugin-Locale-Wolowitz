@@ -7,6 +7,7 @@ use 5.010;
 
 use Dancer ':syntax';
 use Dancer::Plugin;
+use Dancer::Exception qw(:all);
 
 use Locale::Wolowitz;
 
@@ -29,6 +30,11 @@ Translated to the requested language, if such a translation exists, otherwise no
 =cut
 
 my $w;
+
+#Register exception
+register_exception('DirectoryNotFound',
+    message_pattern => "Not found directory: %s"
+);
 
 add_hook(
     before_template => sub {
@@ -60,6 +66,10 @@ sub _path_directory_locale {
     my $path     = $settings->{locale_path_directory} // Dancer::FileUtils::path(
         setting('appdir'), 'i18n'
     );
+
+    if ( ! -d $path ) {
+        raise DirectoryNotFound => $path;
+    }
 
     return $path;
 }
