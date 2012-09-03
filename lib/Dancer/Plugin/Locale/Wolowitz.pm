@@ -13,6 +13,13 @@ use Locale::Wolowitz;
 
 #ABSTRACT: Intenationalization for Dancer
 
+my $w;
+
+#Register exception
+register_exception('DirectoryNotFound',
+    message_pattern => "Not found directory: %s"
+);
+
 =method loc
 
     loc('Welcome');
@@ -28,13 +35,6 @@ Translated to the requested language, if such a translation exists, otherwise no
     output: (Str): Translated to the requested language
 
 =cut
-
-my $w;
-
-#Register exception
-register_exception('DirectoryNotFound',
-    message_pattern => "Not found directory: %s"
-);
 
 add_hook(
     before_template => sub {
