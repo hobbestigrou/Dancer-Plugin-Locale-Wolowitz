@@ -101,6 +101,8 @@ sub _lang {
 
 sub _detect_lang_from_browser {
     my $lang = request->accept_language;
+    
+    return unless $lang;
 
     $lang =~ s/-\w+//g;
     $lang = (split(/,\s*/,$lang))[0] if $lang =~ /,/;
