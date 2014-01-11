@@ -2,6 +2,10 @@ Revision history for Dancer-Plugin-Locale-Wolowitz
 
 {{$NEXT}}
 
+    Few cosmetic things.
+    Fix unitialized value in substitution when accept_language is empty, thanks
+    to isync for the patch.
+
 0.122470  2012-09-03 23:32:10 Europe/Paris
 
     Add few tests.
