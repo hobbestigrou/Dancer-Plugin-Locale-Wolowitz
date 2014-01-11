@@ -28,7 +28,8 @@ or
     <% l('Welcome') %>
     <% l('View %1', ['Country']) %>
 
-Translated to the requested language, if such a translation exists, otherwise no traslation occurs.
+Translated to the requested language, if such a translation exists, otherwise
+no traslation occurs.
 
     input: (Str): Key translate
            (Arrayref): Arguments are injected to the placeholders in the string
@@ -63,9 +64,8 @@ sub _loc {
 
 sub _path_directory_locale {
     my $settings = plugin_setting;
-    my $path     = $settings->{locale_path_directory} // Dancer::FileUtils::path(
-        setting('appdir'), 'i18n'
-    );
+    my $path     = $settings->{locale_path_directory}
+        // Dancer::FileUtils::path(setting('appdir'), 'i18n');
 
     if ( ! -d $path ) {
         raise DirectoryNotFound => $path;
@@ -101,7 +101,7 @@ sub _lang {
 
 sub _detect_lang_from_browser {
     my $lang = request->accept_language;
-    
+
     return unless $lang;
 
     $lang =~ s/-\w+//g;
