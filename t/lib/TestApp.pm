@@ -9,7 +9,7 @@ get '/' => sub {
 };
 
 get '/no_key' => sub {
-    my $tr = loc('hello');
+    my $tr = loc('goodbye');
     return $tr;
 };
 
@@ -18,6 +18,10 @@ get '/complex_key' => sub {
     my $tr   = loc('path_not_found %1', [$path]);
 
     return $tr;
+};
+
+get '/twice_same_request' => sub {
+    return loc("welcome") .' '. loc("hello");
 };
 
 1;

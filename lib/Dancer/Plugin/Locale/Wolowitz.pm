@@ -11,28 +11,33 @@ use Dancer::Exception qw(:all);
 
 use Locale::Wolowitz;
 
-#ABSTRACT: Intenationalization for Dancer
+#ABSTRACT: Internationalization for Dancer
 
 my $w;
 
 #Register exception
 register_exception('DirectoryNotFound',
-    message_pattern => "Not found directory: %s"
+    message_pattern => "Wolowitz internationalization directory not found: %s"
 );
 
 =method loc
 
     loc('Welcome');
     loc('View %1', ['Country'])
-or
+    loc('View %1', ['Country'], $language)
+or in templates
     <% l('Welcome') %>
     <% l('View %1', ['Country']) %>
+    <% l('View %1', ['Country'], 'fr') %>
 
 Translated to the requested language, if such a translation exists, otherwise
-no traslation occurs.
+no translation occurs. Just like in L<Locale::Wolowitz>, with the difference that
+auto-detection is the default, hence an optional passed language is the third,
+instead of the the second argument.
 
     input: (Str): Key translate
            (Arrayref): Arguments are injected to the placeholders in the string
+           (Str): Language code, to circumvent auto-detection from browser header
     output: (Str): Translated to the requested language
 
 =cut
@@ -50,16 +55,15 @@ register loc => sub {
 };
 
 sub _loc {
-    my ( $str, $args ) = @_;
+#   my ( $str, $args, $force_lang ) = @_;
 
     $w       = Locale::Wolowitz->new(_path_directory_locale()) unless defined($w);
-    my $lang = _lang();
+    my $lang = $_[2] || _lang();
 
-    !$args and return $w->loc($str, $lang);
+    # return early if no args array-ref given
+    !$_[1] and return $w->loc($_[0], $lang); # was: !$args and return $w->loc($str, $lang);
 
-    my $msg = $w->loc($str, $lang, map($w->loc($_, $lang), @{$args}));
-
-    return $msg;
+    return $w->loc($_[0], $lang, map($w->loc($_, $lang), @{$_[1]}));
 }
 
 sub _path_directory_locale {
@@ -78,20 +82,14 @@ sub _lang {
     my $settings     = plugin_setting;
     my $lang_session = $settings->{lang_session} || 'lang';
     my $lang;
-
     # don't force the user to store lang in a session
     if ( setting('session') ) {
         my $session_language = session $lang_session;
+        return $session_language if $session_language;
 
-        if ( !$session_language ) {
-            $lang = _detect_lang_from_browser();
-
-            session $lang_session => $lang;
-            return $lang;
-        }
-        else {
-            return $session_language;
-        }
+        $lang = _detect_lang_from_browser();
+        session $lang_session => $lang;
+        return $lang;
     }
 
     $lang = _detect_lang_from_browser();
@@ -100,13 +98,17 @@ sub _lang {
 }
 
 sub _detect_lang_from_browser {
-    my $lang = request->accept_language;
+    # a rude shortcut, for no-session contexts, so multiple loc() calls within the
+    # same request don't trigger regex matching/string munging over and over
+    return request->{__dancer_plugin_locale_wolowitz_detected_language} if request->{__dancer_plugin_locale_wolowitz_detected_language};
 
+    my $lang = request->accept_language;
     return unless $lang;
 
     $lang =~ s/-\w+//g;
-    $lang = (split(/,\s*/,$lang))[0] if $lang =~ /,/;
+    $lang = (split(/,\s*/,$lang))[0] if index($lang,',');
 
+    request->{__dancer_plugin_locale_wolowitz_detected_language} = $lang; # this is a bit rude, but it saves us from detecting lang over and over (with regex and all) within the same request
     return $lang;
 }
 
@@ -144,11 +146,11 @@ L<http://github.com/hobbestigrou/Dancer-Plugin-Locale-Wolowitz>
 
 =head1 ACKNOWLEDGEMENTS
 
-Thanks to Ido Perlmuter to Locale::Wolowitz
+Thanks to Ido Perlmuter for Locale::Wolowitz
 
 =head1 BUGS
 
-Please report any bugs or feature requests in github.
+Please report any bugs or feature requests via github issue tracker.
 
 =head1 SUPPORT
 
