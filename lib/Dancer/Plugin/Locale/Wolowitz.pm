@@ -65,8 +65,7 @@ sub _loc {
 }
 
 sub _path_directory_locale {
-    my $settings = plugin_setting;
-    my $path     = $settings->{locale_path_directory}
+    my $path     = plugin_setting()->{locale_path_directory}
         // Dancer::FileUtils::path(setting('appdir'), 'i18n');
 
     if ( ! -d $path ) {
@@ -77,8 +76,7 @@ sub _path_directory_locale {
 }
 
 sub _lang {
-    my $settings     = plugin_setting;
-    my $lang_session = $settings->{lang_session} || 'lang';
+    my $lang_session = plugin_setting()->{lang_session} || 'lang';
     my $lang;
     # don't force the user to store lang in a session
     if ( setting('session') ) {
