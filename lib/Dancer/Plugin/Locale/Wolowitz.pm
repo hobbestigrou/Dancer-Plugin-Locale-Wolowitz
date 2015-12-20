@@ -76,10 +76,10 @@ sub _path_directory_locale {
 }
 
 sub _lang {
-    my $lang_session = plugin_setting()->{lang_session} || 'lang';
     my $lang;
     # don't force the user to store lang in a session
     if ( setting('session') ) {
+        my $lang_session = plugin_setting()->{lang_session} || 'lang';
         my $session_language = session $lang_session;
         return $session_language if $session_language;
 
