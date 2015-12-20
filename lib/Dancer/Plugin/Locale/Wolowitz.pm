@@ -44,9 +44,7 @@ instead of the the second argument.
 
 add_hook(
     before_template => sub {
-        my $tokens = shift;
-
-        $tokens->{l} = sub { _loc(@_); };
+        $_[0]->{l} = sub { _loc(@_); };
     }
 );
 
