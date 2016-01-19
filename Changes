@@ -2,6 +2,8 @@ Revision history for Dancer-Plugin-Locale-Wolowitz
 
 {{$NEXT}}
 
+0.160190  2016-01-20 00:02:10+01:00 Europe/Paris
+
     Speedup: less temp scalars, index instead of regex
     Added optional third argument (force language)
     handling to loc()
