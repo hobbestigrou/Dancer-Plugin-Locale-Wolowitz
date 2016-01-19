@@ -43,30 +43,30 @@ is $res->{content}, "Repertoire $path non trouve", 'check complex key english';
 # session->destroy;
 sub todo_tests_not_working_yet {
 
-	session->destroy;
-	# two letter language code (dunno if this is RFC compliant, and ever sent by a browser)
-	$res = dancer_response( 'GET' => '/', { headers => HTTP::Headers->new('Accept_Language', 'fr') });
-	is $res->{content}, 'Bienvenue', 'check Accept-Language parsing';
+    session->destroy;
+    # two letter language code (dunno if this is RFC compliant, and ever sent by a browser)
+    $res = dancer_response( 'GET' => '/', { headers => HTTP::Headers->new('Accept_Language', 'fr') });
+    is $res->{content}, 'Bienvenue', 'check Accept-Language parsing';
 
-	session->destroy;
-	# example string from Wikipedia List_of_HTTP_header_fields
-	$res = dancer_response( 'GET' => '/', { headers => HTTP::Headers->new('Accept_Language', 'en-US') });
-	is $res->{content}, 'Welcome', 'check Accept-Language parsing';
+    session->destroy;
+    # example string from Wikipedia List_of_HTTP_header_fields
+    $res = dancer_response( 'GET' => '/', { headers => HTTP::Headers->new('Accept_Language', 'en-US') });
+    is $res->{content}, 'Welcome', 'check Accept-Language parsing';
 
-	session->destroy;
-	# example string from rfc2616-sec14: would mean: "I prefer Danish, but will accept British English and other types of English."
-	$res = dancer_response( 'GET' => '/', { headers => HTTP::Headers->new('Accept_Language' => 'da, en-gb;q=0.8, en;q=0.7') });
-	is $res->{content}, 'Velkomst', 'check Accept-Language parsing';
+    session->destroy;
+    # example string from rfc2616-sec14: would mean: "I prefer Danish, but will accept British English and other types of English."
+    $res = dancer_response( 'GET' => '/', { headers => HTTP::Headers->new('Accept_Language' => 'da, en-gb;q=0.8, en;q=0.7') });
+    is $res->{content}, 'Velkomst', 'check Accept-Language parsing';
 
 
-	session->destroy;
-	# This test will trigger loc() twice withing the same request, so
-	# the shortcut in _detect_lang_from_browser is triggered, where we
-	# stored a previously detected lang into the request hash.
-	# This test isn't actually possible, as we'd have to inspect what's
-	# going on in Wolowitz and request(), but the route illustrates the concept
-	$res = dancer_response( 'GET' => '/twice_same_request', { headers => HTTP::Headers->new('Accept_Language' => 'da, en-gb;q=0.8, en;q=0.7') });
-	is $res->{content}, 'Velkomst Hej', 'check detection shortcut, in no-session environment';
+    session->destroy;
+    # This test will trigger loc() twice withing the same request, so
+    # the shortcut in _detect_lang_from_browser is triggered, where we
+    # stored a previously detected lang into the request hash.
+    # This test isn't actually possible, as we'd have to inspect what's
+    # going on in Wolowitz and request(), but the route illustrates the concept
+    $res = dancer_response( 'GET' => '/twice_same_request', { headers => HTTP::Headers->new('Accept_Language' => 'da, en-gb;q=0.8, en;q=0.7') });
+    is $res->{content}, 'Velkomst Hej', 'check detection shortcut, in no-session environment';
 }
 
 ## test new feature: being able to pass loc() a language, instead of leaving this to auto-detect
